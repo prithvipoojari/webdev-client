@@ -23,6 +23,11 @@ export default function Labs() {
         <li>
           <Link href="/">Kambaz</Link>
         </li>
+        <li>
+          <a id="wd-github" href="https://github.com/prithvipoojari/webdev-client" target="_blank" rel="noreferrer">
+            GitHub repository
+          </a>
+        </li>
       </ul>
     </div>
   );
