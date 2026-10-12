@@ -1,38 +1,41 @@
 import Link from "next/link";
 
-export default async function AssignmentEditor({
-  params,
-}: {
-  params: Promise<{ cid: string; aid: string }>;
-}) {
-  const { cid } = await params;
+export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">Assignment Name</label>
-      <input id="wd-name" defaultValue="A1 - ENV + HTML" />
-      <br />
-      <br />
+      <label htmlFor="wd-name" className="mb-1 block text-sm font-medium">
+        Assignment Name
+      </label>
+      <input
+        id="wd-name"
+        defaultValue="A1 - ENV + HTML"
+        className="mb-4 w-full rounded border border-neutral-300 px-3 py-2 text-sm"
+      />
+      <label htmlFor="wd-description" className="mb-1 block text-sm font-medium">
+        Description
+      </label>
       <textarea
         id="wd-description"
-        defaultValue="The assignment is available online. Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: your full name and section, links to each of the lab assignments, a link to the Kambaz application, and links to all relevant source code repositories. The Kambaz application should include a link to navigate back to the landing page."
+        defaultValue="The assignment is available online Submit a link to the landing page of your Web application running on Vercel."
+        className="mb-4 h-32 w-full rounded border border-neutral-300 px-3 py-2 text-sm"
       />
-      <br />
-      <table>
+
+      <table className="w-full">
         <tbody>
           <tr>
-            <td align="right" valign="top">
+            <td className="pe-4 pt-2 text-right align-top text-sm font-medium">
               <label htmlFor="wd-points">Points</label>
             </td>
-            <td>
-              <input id="wd-points" defaultValue={100} />
+            <td className="pb-4">
+              <input id="wd-points" defaultValue={100} className="w-full rounded border border-neutral-300 px-3 py-2 text-sm" />
             </td>
           </tr>
           <tr>
-            <td align="right" valign="top">
+            <td className="pe-4 pt-2 text-right align-top text-sm font-medium">
               <label htmlFor="wd-group">Assignment Group</label>
             </td>
-            <td>
-              <select id="wd-group" defaultValue="ASSIGNMENTS">
+            <td className="pb-4">
+              <select id="wd-group" defaultValue="ASSIGNMENTS" className="w-full rounded border border-neutral-300 px-3 py-2 text-sm">
                 <option value="ASSIGNMENTS">ASSIGNMENTS</option>
                 <option value="QUIZZES">QUIZZES</option>
                 <option value="EXAMS">EXAMS</option>
@@ -41,11 +44,11 @@ export default async function AssignmentEditor({
             </td>
           </tr>
           <tr>
-            <td align="right" valign="top">
+            <td className="pe-4 pt-2 text-right align-top text-sm font-medium">
               <label htmlFor="wd-display-grade-as">Display Grade as</label>
             </td>
-            <td>
-              <select id="wd-display-grade-as" defaultValue="PERCENTAGE">
+            <td className="pb-4">
+              <select id="wd-display-grade-as" defaultValue="PERCENTAGE" className="w-full rounded border border-neutral-300 px-3 py-2 text-sm">
                 <option value="PERCENTAGE">Percentage</option>
                 <option value="POINTS">Points</option>
                 <option value="LETTER">Letter Grade</option>
@@ -54,11 +57,11 @@ export default async function AssignmentEditor({
             </td>
           </tr>
           <tr>
-            <td align="right" valign="top">
+            <td className="pe-4 pt-2 text-right align-top text-sm font-medium">
               <label htmlFor="wd-submission-type">Submission Type</label>
             </td>
-            <td>
-              <select id="wd-submission-type" defaultValue="ONLINE">
+            <td className="pb-4">
+              <select id="wd-submission-type" defaultValue="ONLINE" className="w-full rounded border border-neutral-300 px-3 py-2 text-sm">
                 <option value="ONLINE">Online</option>
                 <option value="PAPER">On Paper</option>
                 <option value="NONE">No Submission</option>
@@ -97,36 +100,29 @@ export default async function AssignmentEditor({
             </td>
           </tr>
           <tr>
-            <td align="right" valign="top">
+            <td className="pe-4 pt-2 text-right align-top text-sm font-medium">
               Assign
             </td>
-            <td>
-              <label htmlFor="wd-assign-to">Assign to</label>
-              <br />
-              <input id="wd-assign-to" defaultValue="Everyone" />
-              <br />
-              <br />
-              <label htmlFor="wd-due-date">Due</label>
-              <br />
-              <input type="date" id="wd-due-date" defaultValue="2024-05-13" />
-              <br />
-              <br />
+            <td className="pb-4">
+              <label htmlFor="wd-assign-to" className="mb-1 block text-sm font-medium">Assign to</label>
+              <input id="wd-assign-to" className="mb-4 w-full rounded border border-neutral-300 px-3 py-2 text-sm" defaultValue="Everyone" />
+              <label htmlFor="wd-due-date" className="mb-1 block text-sm font-medium">Due</label>
+              <input type="date" id="wd-due-date" className="mb-4 w-full rounded border border-neutral-300 px-3 py-2 text-sm" defaultValue="2024-05-13" />
               <table>
                 <tbody>
                   <tr>
-                    <td valign="top">
-                      <label htmlFor="wd-available-from">Available from</label>
-                      <br />
+                    <td valign="top" className="pe-4">
+                      <label htmlFor="wd-available-from" className="mb-1 block text-sm font-medium">Available from</label>
                       <input
+                        className="rounded border border-neutral-300 px-3 py-2 text-sm"
                         type="date"
                         id="wd-available-from"
                         defaultValue="2024-05-06"
                       />
                     </td>
                     <td valign="top">
-                      <label htmlFor="wd-available-until">Until</label>
-                      <br />
-                      <input type="date" id="wd-available-until" />
+                      <label htmlFor="wd-available-until" className="mb-1 block text-sm font-medium">Until</label>
+                      <input type="date" id="wd-available-until" className="rounded border border-neutral-300 px-3 py-2 text-sm" />
                     </td>
                   </tr>
                 </tbody>
@@ -135,13 +131,30 @@ export default async function AssignmentEditor({
           </tr>
         </tbody>
       </table>
-      <hr />
-      <Link href={`/courses/${cid}/assignments`} id="wd-cancel">
-        <button type="button">Cancel</button>
-      </Link>{" "}
-      <Link href={`/courses/${cid}/assignments`} id="wd-save">
-        <button type="button">Save</button>
-      </Link>
+      <label htmlFor="wd-ai-editor-notes" className="mb-1 block text-sm font-medium">
+        Sample notes
+      </label>
+      <textarea
+        id="wd-ai-editor-notes"
+        className="mb-4 h-32 w-full rounded border border-neutral-300 px-3 py-2 text-sm"
+      />
+      <hr className="my-4" />
+      <div className="flex justify-end gap-2">
+        <Link
+          href="/courses/1234/assignments"
+          id="wd-cancel"
+          className="rounded border border-neutral-300 bg-neutral-100 px-4 py-2 text-sm"
+        >
+          Cancel
+        </Link>
+        <Link
+          href="/courses/1234/assignments"
+          id="wd-save"
+          className="rounded bg-red-600 px-4 py-2 text-sm text-white"
+        >
+          Save
+        </Link>
+      </div>
     </div>
   );
 }
