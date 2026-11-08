@@ -26,7 +26,7 @@ export default function CoursesLayout({
     enrollments.some(
       (e) => e.user === currentUser._id && e.course === courseId,
     );
-  if (!isEnrolled) {
+  if (currentUser && !isEnrolled) {
     redirect("/dashboard");
   }
 
