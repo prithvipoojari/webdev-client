@@ -1,16 +1,15 @@
+"use client";
+import { useParams, useRouter } from "next/navigation";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import AssignmentItem from "./AssignmentItem";
-import * as db from "../../../database";
+import { useAssignmentsStore } from "../../../store/assignmentsStore";
 
-export default async function Assignments({
-  params,
-}: {
-  params: Promise<{ cid: string }>;
-}) {
-  const { cid } = await params;
-  const assignments = db.assignments.filter(
-    (assignment) => assignment.course === cid,
-  );
+export default function Assignments() {
+  const { cid } = useParams<{ cid: string }>();
+  const router = useRouter();
+  const allAssignments = useAssignmentsStore((state) => state.assignments);
+  const assignments = allAssignments.filter((a) => a.course === cid);
+
   return (
     <div id="wd-assignments">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
@@ -32,6 +31,7 @@ export default async function Assignments({
           </button>
           <button
             id="wd-add-assignment"
+            onClick={() => router.push(`/courses/${cid}/assignments/new`)}
             type="button"
             className="inline-flex items-center gap-1 rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
           >
