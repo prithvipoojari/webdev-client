@@ -29,6 +29,16 @@ export default function Labs() {
             GitHub repository
           </a>
         </li>
+        <li>
+          <a href="https://github.com/prithvipoojari/webdev-server" target="_blank" rel="noreferrer">
+            Node server repository
+          </a>
+        </li>
+        <li>
+          <a href="https://webdev-server-88zt.onrender.com" target="_blank" rel="noreferrer">
+            Render server
+          </a>
+        </li>
       </ul>
     </div>
   );
