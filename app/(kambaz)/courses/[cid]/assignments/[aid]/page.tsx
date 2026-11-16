@@ -1,22 +1,24 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  useAssignmentsStore,
-  type Assignment,
-} from "../../../../store/assignmentsStore";
+import { type Assignment } from "../../../../store/assignmentsStore";
+import * as client from "../client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams<{ cid: string; aid: string }>();
   const router = useRouter();
-  const assignments = useAssignmentsStore((state) => state.assignments);
-  const addAssignment = useAssignmentsStore((state) => state.addAssignment);
-  const updateAssignment = useAssignmentsStore((state) => state.updateAssignment);
-  const existing = assignments.find((a) => a._id === aid);
+  const isNew = aid === "new";
   const [assignment, setAssignment] = useState<Assignment>(
-    existing ?? { _id: "", title: "New Assignment", course: cid, description: "New Assignment Description", points: 100, due: "", available: "", until: "" },
+    { _id: "", title: "New Assignment", course: cid, description: "New Assignment Description", points: 100, due: "", available: "", until: "" },
   );
+  useEffect(() => {
+    if (isNew) return;
+    client.findAssignmentsForCourse(cid).then((assignments: Assignment[]) => {
+      const found = assignments.find((a) => a._id === aid);
+      if (found) setAssignment(found);
+    });
+  }, [cid, aid, isNew]);
 
   return (
     <div id="wd-assignments-editor">
@@ -170,11 +172,11 @@ export default function AssignmentEditor() {
         </Link>
         <button
           type="button"
-          onClick={() => {
-            if (existing) {
-              updateAssignment(assignment);
+          onClick={async () => {
+            if (isNew) {
+              await client.createAssignmentForCourse(cid, assignment);
             } else {
-              addAssignment(assignment);
+              await client.updateAssignment(assignment);
             }
             router.push(`/courses/${cid}/assignments`);
           }}

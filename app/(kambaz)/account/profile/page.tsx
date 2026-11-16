@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import * as client from "../client";
 import { useAccountContext, type User } from "../AccountContext";
 
 export default function Profile() {
@@ -11,13 +12,29 @@ export default function Profile() {
 
   useEffect(() => {
     if (!currentUser) {
-      router.push("/account/signin");
+      client
+        .profile()
+        .then((user) => {
+          if (!user) {
+            router.push("/account/signin");
+            return;
+          }
+          setCurrentUser(user);
+        })
+        .catch(() => router.push("/account/signin"));
       return;
     }
     setProfile(currentUser);
-  }, [currentUser, router]);
+  }, [currentUser, router, setCurrentUser]);
 
-  const signout = () => {
+  const updateProfile = async () => {
+    if (!profile) return;
+    const updatedProfile = await client.updateUser(profile);
+    setCurrentUser(updatedProfile);
+  };
+
+  const signout = async () => {
+    await client.signout();
     setCurrentUser(null);
     router.push("/account/signin");
   };
@@ -65,6 +82,9 @@ export default function Profile() {
         <option value="FACULTY">Faculty</option>
         <option value="STUDENT">Student</option>
       </select>
+      <button type="button" onClick={updateProfile}>
+        Update
+      </button>
       <button type="button" onClick={signout} id="wd-signout-btn">
         Sign out
       </button>

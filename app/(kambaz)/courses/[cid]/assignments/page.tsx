@@ -2,13 +2,21 @@
 import { useParams, useRouter } from "next/navigation";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import AssignmentItem from "./AssignmentItem";
-import { useAssignmentsStore } from "../../../store/assignmentsStore";
+import { useEffect, useState } from "react";
+import * as client from "./client";
+import { type Assignment } from "../../../store/assignmentsStore";
 
 export default function Assignments() {
   const { cid } = useParams<{ cid: string }>();
   const router = useRouter();
-  const allAssignments = useAssignmentsStore((state) => state.assignments);
-  const assignments = allAssignments.filter((a) => a.course === cid);
+  const [assignments, setAssignments] = useState<Assignment[]>([]);
+  useEffect(() => {
+    client.findAssignmentsForCourse(cid).then((data) => setAssignments(data));
+  }, [cid]);
+  const onDeleteAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    setAssignments(assignments.filter((a) => a._id !== assignmentId));
+  };
 
   return (
     <div id="wd-assignments">
@@ -59,6 +67,8 @@ export default function Assignments() {
             aid={assignment._id}
             title={assignment.title}
             details={`Multiple Modules | Not available until ${assignment.available} | Due ${assignment.due} | ${assignment.points} pts`}
+            deleteAssignment={onDeleteAssignment}
+
           />
         ))}
       </ul>
